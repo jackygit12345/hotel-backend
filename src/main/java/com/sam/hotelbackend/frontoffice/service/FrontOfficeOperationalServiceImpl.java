@@ -14,6 +14,10 @@ import com.sam.hotelbackend.stay.entity.StayStatus;
 import com.sam.hotelbackend.stay.mapper.StayMapper;
 import com.sam.hotelbackend.stay.repository.StayRepository;
 
+import com.sam.hotelbackend.frontoffice.dto.GuestStayHistoryResponse;
+import com.sam.hotelbackend.guest.dto.GuestResponse;
+import com.sam.hotelbackend.guest.service.GuestService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +37,8 @@ public class FrontOfficeOperationalServiceImpl
 
     private final StayMapper stayMapper;
     private final BillingMapper billingMapper;
+
+    private final GuestService guestService;
 
     // ============================================================
     // STAY OPERATIONAL SEARCH
@@ -130,4 +136,23 @@ public class FrontOfficeOperationalServiceImpl
                 )
         );
     }
+
+    @Override
+public GuestStayHistoryResponse getGuestStayHistory(Long guestId) {
+
+    GuestResponse guest = guestService.getGuestById(guestId);
+
+    List<StayResponse> stays =
+            stayRepository.findByGuestId(guestId)
+                    .stream()
+                    .map(stayMapper::toResponse)
+                    .toList();
+
+    return new GuestStayHistoryResponse(
+            guest.getId(),
+            guest.getFirstName() + " " + guest.getLastName(),
+            stays
+    );
+} 
+
 }

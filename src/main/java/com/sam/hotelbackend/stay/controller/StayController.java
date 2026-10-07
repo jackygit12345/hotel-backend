@@ -2,6 +2,10 @@ package com.sam.hotelbackend.stay.controller;
 
 import com.sam.hotelbackend.stay.dto.CheckInRequest;
 import com.sam.hotelbackend.stay.dto.StayResponse;
+import com.sam.hotelbackend.stay.dto.StayExtensionRequest;
+import com.sam.hotelbackend.stay.dto.RoomTransferRequest;
+import com.sam.hotelbackend.stay.dto.EarlyCheckInRequest;
+import com.sam.hotelbackend.stay.dto.LateCheckOutRequest;
 import com.sam.hotelbackend.stay.entity.StayStatus;
 import com.sam.hotelbackend.stay.service.StayService;
 import jakarta.validation.Valid;
@@ -83,6 +87,28 @@ public class StayController {
         );
     }
 
+    @PostMapping("/{id}/extend")
+public ResponseEntity<StayResponse> extendStay(
+        @PathVariable Long id,
+        @Valid @RequestBody StayExtensionRequest request) {
+
+    return ResponseEntity.ok(
+            stayService.extendStay(id, request)
+    );
+}
+
+
+@PostMapping("/{id}/transfer-room")
+public ResponseEntity<StayResponse> transferRoom(
+        @PathVariable Long id,
+        @Valid @RequestBody RoomTransferRequest request) {
+
+    return ResponseEntity.ok(
+            stayService.transferRoom(id, request)
+    );
+}
+
+
     @PostMapping("/{id}/check-out")
     public ResponseEntity<StayResponse> checkOut(
             @PathVariable Long id) {
@@ -91,4 +117,26 @@ public class StayController {
                 stayService.checkOut(id)
         );
     }
+
+
+    @PostMapping("/{id}/early-check-in")
+	public ResponseEntity<StayResponse> recordEarlyCheckIn(
+        @PathVariable Long id,
+        @Valid @RequestBody EarlyCheckInRequest request) {
+
+    return ResponseEntity.ok(
+            stayService.recordEarlyCheckIn(id, request)
+    	);
+	}
+
+    @PostMapping("/{id}/late-check-out")
+	public ResponseEntity<StayResponse> recordLateCheckOut(
+        @PathVariable Long id,
+        @Valid @RequestBody LateCheckOutRequest request) {
+
+    return ResponseEntity.ok(
+            stayService.recordLateCheckOut(id, request)
+    	);
+	}
+
 }

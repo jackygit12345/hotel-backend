@@ -4,6 +4,7 @@ import com.sam.hotelbackend.billing.dto.InvoiceResponse;
 import com.sam.hotelbackend.billing.dto.PaymentResponse;
 import com.sam.hotelbackend.stay.dto.StayResponse;
 import com.sam.hotelbackend.frontoffice.service.FrontOfficeOperationalService;
+import com.sam.hotelbackend.frontoffice.dto.GuestStayHistoryResponse;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -115,4 +116,19 @@ public class FrontOfficeOperationalController {
                         .getPaymentsByStatus(status)
         );
     }
+
+    // ============================================================
+    // GUEST STAY HISTORY
+    // ============================================================
+
+    @GetMapping("/guests/{guestId}/stay-history")
+    public ResponseEntity<GuestStayHistoryResponse> getGuestStayHistory(
+        @PathVariable Long guestId) {
+
+    return ResponseEntity.ok(
+            frontOfficeOperationalService
+                    .getGuestStayHistory(guestId)
+    );
+}
+
 }

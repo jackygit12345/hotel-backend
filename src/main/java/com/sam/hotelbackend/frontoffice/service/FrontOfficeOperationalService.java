@@ -1,5 +1,6 @@
 package com.sam.hotelbackend.frontoffice.service;
 
+import com.sam.hotelbackend.frontoffice.dto.GuestStayHistoryResponse;
 import com.sam.hotelbackend.billing.dto.InvoiceResponse;
 import com.sam.hotelbackend.billing.dto.PaymentResponse;
 import com.sam.hotelbackend.stay.dto.StayResponse;
@@ -21,4 +22,6 @@ public interface FrontOfficeOperationalService {
     List<InvoiceResponse> getOutstandingInvoices();
 
     List<PaymentResponse> getPaymentsByStatus(String status);
+   
+    GuestStayHistoryResponse getGuestStayHistory(Long guestId);
 }
